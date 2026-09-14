@@ -9,21 +9,21 @@
 
 class Todo {
     std::string note;
-    int id;
+    int id{};
     bool checked = false;
     void SyncID();
-    static std::vector<std::string> ReadDatabase(std::fstream &file);
-    void UpdateDatabase(std::vector<std::string> &database) const;
 public:
+    static int elementsCount;
     int GetID() const {
         return id;
     }
-    Todo(const std::string &line) {
+
+    explicit Todo(const std::string &line) {
         SyncID();
         CreateTodo(line);
     }
 
-    void CheckTodo(const int& identeficator);
+    static void CheckTodo(const int& identifier);
     void CreateTodo(const std::string& line);
     std::string GetNote() {
         if (!note.empty())

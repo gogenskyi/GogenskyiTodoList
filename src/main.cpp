@@ -2,8 +2,8 @@
 #include <Todo.h>
 
 int main() {
-    Todo todo("f");
+    const Todo todo("f1");
     std::cout<<GetTodo(7)<<std::endl;
-    todo.CheckTodo(todo.GetID());
+    Todo::CheckTodo(todo.GetID());
     return 0;
 }
