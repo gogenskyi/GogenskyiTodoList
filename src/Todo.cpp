@@ -25,14 +25,13 @@ void Todo::CheckTodo(const int& identifier) {
 }
 
 void Todo::SyncID() {
-    std::fstream file(PATH,std::ios::in);
+    std::fstream file = GetDataBase();
     std::vector<std::string> copy = DataBase::ReadDatabase(file);
     std::string line = copy[0];
     if (!line.empty() && line.back() == ';') {
         line.pop_back();
     }
     id = elementsCount = stoi(line)+1;
-    file.close();
     UpdateDatabase(copy);
 
 }
@@ -41,19 +40,18 @@ void Todo::SyncID() {
 
 void Todo::CreateTodo(const std::string &line) {
     note = line;
-    std::ofstream file;
+    std::fstream file = GetDataBase();
     file.open(PATH, std::ios::out | std::ios::app);
     if (!file.is_open()) {
         throw std::runtime_error("File is not opened");
     }
     file<<'<'<<id<<'>'<<'\t'<<line<<';'<<'\t'<<"-;"<<'\n';
-    file.close();
 }
 
 
 std::string GetTodo(const int &id) {
     std::string line;
-    std::fstream file(PATH, std::ios_base::in);
+    std::fstream file = GetDataBase();
     while (std::getline(file,line)) {
         if (!line.contains("<" + std::to_string(id)+ ">")) {
            continue;

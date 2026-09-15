@@ -6,14 +6,16 @@
 #include <fstream>
 #include "Todo.h"
 
+
 void UpdateDatabase(std::vector<std::string> &database){
-    std::fstream f(PATH, std::ios::out);
+    std::fstream f(PATH);
     database[0] = std::to_string(Todo::elementsCount) + ';';
     for (const auto & i : database) {
         f<<i<<'\n';
     }
-    f.close();
 }
+
+
 
 std::vector<std::string> DataBase::ReadDatabase(std::fstream &file) {
     if (!file.is_open())
@@ -26,7 +28,6 @@ std::vector<std::string> DataBase::ReadDatabase(std::fstream &file) {
     return copy;
 }
 
-void DataBase::CreateDatabase(const std::string &path) {
-    std::ofstream file(path);
+void DataBase::CreateDatabase(std::fstream &file) {
     file<<"0;"<<std::endl;
 }
